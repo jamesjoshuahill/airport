@@ -14,8 +14,4 @@ class Plane
   def take_off
     @airport = nil if @airport.clear_for_take_off?
   end
-
-  def flying?
-    @airport.nil?
-  end
 end
