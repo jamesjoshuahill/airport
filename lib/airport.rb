@@ -1,10 +1,27 @@
+require_relative 'plane'
+
 class Airport
   attr_reader :capacity, :hanger, :weather
 
-  def initialize(capacity, weather)
-    @capacity, @weather = capacity, weather
+  def initialize(no_of_planes, capacity, weather)
+    check_arguments(no_of_planes, capacity)
+    @capacity, @weather, @bomb_scare = capacity, weather, false
     @hanger = []
-    @bomb_scare = false
+    put_new_planes_in_hanger(no_of_planes)
+  end
+
+  def check_arguments(no_of_planes, capacity)
+    raise ArgumentError.new(
+      'Cannot have more planes than there is capacity for.'
+    ) if no_of_planes > capacity
+  end
+
+  def put_new_planes_in_hanger(no_of_planes)
+    no_of_planes.times { @hanger << new_plane }
+  end
+
+  def new_plane
+    Plane.new(self)
   end
 
   def sunny_weather?

@@ -2,7 +2,7 @@ require 'airport'
 
 describe Airport do
   let(:weather) { double :Weather }
-  let(:airport) { Airport.new(50, weather) }
+  let(:airport) { Airport.new(0, 50, weather) }
   let(:plane) { double :Plane }
   
   it 'should have it\'s own weather' do
@@ -13,8 +13,16 @@ describe Airport do
     expect(airport.capacity).to eq 50
   end
 
-  it 'should have a hanger for planes' do
-    expect(airport.hanger).to be_empty
+  it 'should have a hanger with a given number of planes' do
+    airport = Airport.new(1, 50, weather)
+    expect(airport.hanger.count).to eq 1
+  end
+
+  it 'should not have a hanger with more planes than capacity' do
+    expect {
+      airport = Airport.new(10, 5, weather)
+    }.to raise_error(ArgumentError,
+      'Cannot have more planes than there is capacity for.')
   end
 
   it 'should start without a bomb scare' do
@@ -54,7 +62,7 @@ describe Airport do
     end
 
     it 'no space in the hanger' do
-      airport = Airport.new(0, weather)
+      airport = Airport.new(50, 50, weather)
 
       expect(airport).not_to be_clear_to_land
     end
