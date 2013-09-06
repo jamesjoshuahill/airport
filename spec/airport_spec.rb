@@ -2,29 +2,15 @@ require 'airport'
 
 describe Airport do
   let(:weather) { double :Weather }
-  let(:airport) { Airport.new(0, 50, weather) }
+  let(:airport) { Airport.new(0, 10, weather) }
   let(:plane) { double :Plane }
   
   it 'should have it\'s own weather' do
     expect(airport.weather).to eq weather
   end
 
-  context 'should have a hanger' do
-    it 'with a maximum capacity' do
-      expect(airport.capacity).to eq 50
-    end
-
-    it 'with a given number of planes' do
-      airport = Airport.new(1, 50, weather)
-      expect(airport.hanger.count).to eq 1
-    end
-
-    it 'but cannot have more planes than there is capacity for' do
-      expect {
-        airport = Airport.new(10, 5, weather)
-      }.to raise_error(ArgumentError,
-        'Cannot have more planes than there is capacity for.')
-    end
+  it 'should have a runway' do
+    expect(airport.runway).to be_nil
   end
 
   it 'should start without a bomb scare' do
@@ -40,6 +26,24 @@ describe Airport do
     it 'be called off' do
       airport.call_off_bomb_scare
       expect(airport).not_to have_a_bomb_scare
+    end
+  end
+
+  context 'should have a hanger' do
+    it 'with a maximum capacity' do
+      expect(airport.capacity).to eq 10
+    end
+
+    it 'with a given number of planes' do
+      airport = Airport.new(1, 10, weather)
+      expect(airport.hanger.count).to eq 1
+    end
+
+    it 'but cannot have more planes than there is capacity for' do
+      expect {
+        airport = Airport.new(10, 5, weather)
+      }.to raise_error(ArgumentError,
+        'Cannot have more planes than there is capacity for.')
     end
   end
 
@@ -65,7 +69,6 @@ describe Airport do
 
     it 'no space in the hanger' do
       airport = Airport.new(50, 50, weather)
-
       expect(airport).not_to be_clear_to_land
     end
 
@@ -83,9 +86,10 @@ describe Airport do
       expect(airport).to be_clear_to_take_off
     end
 
+    it 'when they are on the runway'
+
     it 'and remove them from the hanger' do
-      expect(airport).to receive(:clear_to_land?).and_return true
-      airport.land(plane)
+      airport = Airport.new(1, 10, weather)
       expect(airport).to receive(:clear_to_take_off?).and_return true
       airport.take_off(plane)
 

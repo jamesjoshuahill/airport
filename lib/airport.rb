@@ -1,12 +1,12 @@
 require_relative 'plane'
 
 class Airport
-  attr_reader :capacity, :hanger, :weather
+  attr_reader :capacity, :hanger, :weather, :runway
 
   def initialize(no_of_planes, capacity, weather)
     check_arguments(no_of_planes, capacity)
     @capacity, @weather = capacity, weather
-    @bomb_scare, @hanger = false, []
+    @bomb_scare, @hanger, @runway = false, [], nil
     put_new_planes_in_hanger(no_of_planes)
   end
 
@@ -39,7 +39,7 @@ class Airport
   end
 
   private
-  
+
   def check_arguments(no_of_planes, capacity)
     raise ArgumentError.new(
       'Cannot have more planes than there is capacity for.'
