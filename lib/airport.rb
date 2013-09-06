@@ -22,8 +22,18 @@ class Airport
     @hanger << plane if clear_to_land?
   end
 
+  def move_to_runway(plane)
+    if @runway.nil?
+      @hanger.delete(plane)
+      @runway = plane
+    end
+  end
+
   def take_off(plane)
-    @hanger.delete(plane) if clear_to_take_off?
+    if clear_to_take_off?
+      move_to_runway(plane)
+      @runway = nil if @runway = plane
+    end
   end
 
   def has_a_bomb_scare?

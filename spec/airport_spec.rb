@@ -9,10 +9,6 @@ describe Airport do
     expect(airport.weather).to eq weather
   end
 
-  it 'should have a runway' do
-    expect(airport.runway).to be_nil
-  end
-
   it 'should start without a bomb scare' do
     expect(airport).not_to have_a_bomb_scare
   end
@@ -44,6 +40,29 @@ describe Airport do
         airport = Airport.new(10, 5, weather)
       }.to raise_error(ArgumentError,
         'Cannot have more planes than there is capacity for.')
+    end
+  end
+
+  context 'should have a runway' do
+    it 'that starts empty' do
+      expect(airport.runway).to be_nil
+    end
+
+    it 'that cannot have more than one plane' do
+      plane2 = double :Plane
+      airport.move_to_runway(plane)
+      airport.move_to_runway(plane2)
+
+      expect(airport.runway).to eq plane
+    end
+
+    it 'that a plane can be moved to from the hanger' do
+      expect(airport).to receive(:clear_to_land?).and_return true
+      airport.land(plane)
+      airport.move_to_runway(plane)
+
+      expect(airport.hanger).not_to include plane
+      expect(airport.runway).to eq plane
     end
   end
 
@@ -86,14 +105,24 @@ describe Airport do
       expect(airport).to be_clear_to_take_off
     end
 
-    it 'when they are on the runway'
-
     it 'and remove them from the hanger' do
-      airport = Airport.new(1, 10, weather)
+      expect(airport).to receive(:clear_to_land?).and_return true
+      airport.land(plane)
+      expect(airport).to receive(:clear_to_take_off?).and_return true
+      airport.take_off(plane)
+ 
+      expect(airport.hanger).not_to include plane
+    end
+
+    xit 'from the runway and remove them from the airport' do
+      expect(airport).to receive(:clear_to_land?).and_return true
+      airport.land(plane)
+      expect(airport).to receive(:move_to_runway).with(plane)
       expect(airport).to receive(:clear_to_take_off?).and_return true
       airport.take_off(plane)
 
       expect(airport.hanger).not_to include plane
+      expect(airport.runway).to eq nil
     end
   end
 
