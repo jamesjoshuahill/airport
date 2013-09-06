@@ -105,19 +105,9 @@ describe Airport do
       expect(airport).to be_clear_to_take_off
     end
 
-    it 'and remove them from the hanger' do
+    it 'from the runway and remove them from the airport' do
       expect(airport).to receive(:clear_to_land?).and_return true
       airport.land(plane)
-      expect(airport).to receive(:clear_to_take_off?).and_return true
-      airport.take_off(plane)
- 
-      expect(airport.hanger).not_to include plane
-    end
-
-    xit 'from the runway and remove them from the airport' do
-      expect(airport).to receive(:clear_to_land?).and_return true
-      airport.land(plane)
-      expect(airport).to receive(:move_to_runway).with(plane)
       expect(airport).to receive(:clear_to_take_off?).and_return true
       airport.take_off(plane)
 
