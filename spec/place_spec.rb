@@ -9,7 +9,13 @@ describe Plane do
   end
 
   context 'when parked at an airport should' do
+    it 'go to the airport\'s runway before taking off' do
+      expect(airport).to receive(:move_to_runway).with(plane)
+      plane.go_to_runway
+    end
+
     it 'take off with clearance' do
+      expect(airport).to receive(:move_to_runway).with(plane)
       expect(airport).to receive(:clear_for_take_off?).and_return true
       plane.take_off
 
@@ -17,6 +23,7 @@ describe Plane do
     end
 
     it 'not take off without clearance' do
+      expect(airport).to receive(:move_to_runway).with(plane)
       expect(airport).to receive(:clear_for_take_off?).and_return false
       plane.take_off
 
@@ -25,10 +32,7 @@ describe Plane do
   end
   
   context 'when flying should' do
-    before(:each) do
-      expect(airport).to receive(:clear_for_take_off?).and_return true
-      plane.take_off
-    end
+    let(:plane) { Plane.new(nil) }
 
     it 'land at an airport with clearance' do
       expect(airport).to receive(:clear_for_landing?).and_return true
