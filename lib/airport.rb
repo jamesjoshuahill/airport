@@ -5,8 +5,8 @@ class Airport
 
   def initialize(no_of_planes, capacity, weather)
     check_arguments(no_of_planes, capacity)
-    @capacity, @weather, @bomb_scare = capacity, weather, false
-    @hanger = []
+    @capacity, @weather = capacity, weather
+    @bomb_scare, @hanger = false, []
     put_new_planes_in_hanger(no_of_planes)
   end
 

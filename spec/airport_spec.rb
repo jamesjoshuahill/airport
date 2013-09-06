@@ -9,27 +9,29 @@ describe Airport do
     expect(airport.weather).to eq weather
   end
 
-  it 'should have a maximum capacity for planes' do
-    expect(airport.capacity).to eq 50
-  end
+  context 'should have a hanger' do
+    it 'with a maximum capacity' do
+      expect(airport.capacity).to eq 50
+    end
 
-  it 'should have a hanger with a given number of planes' do
-    airport = Airport.new(1, 50, weather)
-    expect(airport.hanger.count).to eq 1
-  end
+    it 'with a given number of planes' do
+      airport = Airport.new(1, 50, weather)
+      expect(airport.hanger.count).to eq 1
+    end
 
-  it 'should not have a hanger with more planes than capacity' do
-    expect {
-      airport = Airport.new(10, 5, weather)
-    }.to raise_error(ArgumentError,
-      'Cannot have more planes than there is capacity for.')
+    it 'but cannot have more planes than there is capacity for' do
+      expect {
+        airport = Airport.new(10, 5, weather)
+      }.to raise_error(ArgumentError,
+        'Cannot have more planes than there is capacity for.')
+    end
   end
 
   it 'should start without a bomb scare' do
     expect(airport).not_to have_a_bomb_scare
   end
 
-  context 'bomb scares should' do
+  context 'can have bomb scare which should' do
     before(:each) { airport.respond_to_bomb_scare }
     it 'be responded to' do
       expect(airport).to have_a_bomb_scare
