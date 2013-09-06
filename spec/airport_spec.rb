@@ -22,20 +22,19 @@ describe Airport do
   end
 
   context 'bomb scares should' do
+    before(:each) { airport.respond_to_bomb_scare }
     it 'be responded to' do
-      airport.respond_to_bomb_scare
       expect(airport).to have_a_bomb_scare
     end
 
     it 'be called off' do
-      airport.respond_to_bomb_scare
       airport.call_off_bomb_scare
       expect(airport).not_to have_a_bomb_scare
     end
   end
 
   context 'should let planes land' do
-    it 'if there is sunny weather, space in the hanger and no bomb scare' do
+    it 'if there space in the hanger, sunny weather and no bomb scare' do
       expect(weather).to receive(:state).and_return :sunny
       expect(airport).to be_clear_to_land
     end
@@ -54,9 +53,8 @@ describe Airport do
       expect(airport).not_to be_clear_to_land
     end
 
-    it 'no space' do
+    it 'no space in the hanger' do
       airport = Airport.new(0, weather)
-      expect(weather).to receive(:state).and_return :sunny
 
       expect(airport).not_to be_clear_to_land
     end

@@ -7,24 +7,24 @@ class Airport
     @bomb_scare = false
   end
 
-  def stormy_weather?
-    @weather.state == :stormy
+  def sunny_weather?
+    @weather.state == :sunny
   end
 
   def has_space_in_hanger?
     hanger.count < capacity
   end
 
-  def has_stormy_weather_or_a_bomb_scare?
-    stormy_weather? or has_a_bomb_scare? 
+  def has_sunny_weather_and_no_bomb_scare?
+    sunny_weather? and !has_a_bomb_scare?
   end
 
   def clear_to_land?
-    has_space_in_hanger? unless has_stormy_weather_or_a_bomb_scare?
+    has_space_in_hanger? and has_sunny_weather_and_no_bomb_scare?
   end
 
   def clear_to_take_off?
-    true unless has_stormy_weather_or_a_bomb_scare?
+    has_sunny_weather_and_no_bomb_scare?
   end
 
   def land(plane)
