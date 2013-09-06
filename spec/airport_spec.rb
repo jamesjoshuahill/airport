@@ -1,0 +1,101 @@
+require 'airport'
+
+describe Airport do
+  let(:weather) { double :Weather }
+  let(:airport) { Airport.new(50, weather) }
+  let(:plane) { double :Plane }
+  
+  it 'should have it\'s own weather' do
+    expect(airport.weather).to eq weather
+  end
+
+  it 'should have a maximum capacity for planes' do
+    expect(airport.capacity).to eq 50
+  end
+
+  it 'should have a hanger for planes' do
+    expect(airport.hanger).to be_empty
+  end
+
+  it 'should start without a bomb scare' do
+    expect(airport).not_to have_a_bomb_scare
+  end
+
+  context 'bomb scares should' do
+    it 'be responded to' do
+      airport.respond_to_bomb_scare
+      expect(airport).to have_a_bomb_scare
+    end
+
+    it 'be called off' do
+      airport.respond_to_bomb_scare
+      airport.call_off_bomb_scare
+      expect(airport).not_to have_a_bomb_scare
+    end
+  end
+
+  context 'should let planes land' do
+    it 'if there is sunny weather, space in the hanger and no bomb scare' do
+      expect(weather).to receive(:state).and_return :sunny
+      expect(airport).to be_clear_to_land
+    end
+
+    it 'and put them in the hanger' do
+      expect(airport).to receive(:clear_to_land?).and_return true
+      airport.land(plane)
+
+      expect(airport.hanger).to include plane
+    end
+  end
+
+  context 'should not land planes if there is' do
+    it 'stormy weather' do
+      expect(weather).to receive(:state).and_return :stormy
+      expect(airport).not_to be_clear_to_land
+    end
+
+    it 'no space' do
+      airport = Airport.new(0, weather)
+      expect(weather).to receive(:state).and_return :sunny
+
+      expect(airport).not_to be_clear_to_land
+    end
+
+    it 'a bomb scare' do
+      expect(weather).to receive(:state).and_return :sunny
+      airport.respond_to_bomb_scare
+
+      expect(airport).not_to be_clear_to_land
+    end
+  end
+
+  context 'should let planes take off' do
+    it 'if there is sunny weather and no bomb scare' do
+      expect(weather).to receive(:state).and_return :sunny
+      expect(airport).to be_clear_to_take_off
+    end
+
+    it 'and remove them from the hanger' do
+      expect(airport).to receive(:clear_to_land?).and_return true
+      airport.land(plane)
+      expect(airport).to receive(:clear_to_take_off?).and_return true
+      airport.take_off(plane)
+
+      expect(airport.hanger).not_to include plane
+    end
+  end
+
+  context 'should not let planes take off if there is' do
+    it 'stormy weather' do
+      expect(weather).to receive(:state).and_return :stormy
+      expect(airport).not_to be_clear_to_take_off
+    end
+
+    it 'a bomb scare' do
+      expect(weather).to receive(:state).and_return :sunny
+      airport.respond_to_bomb_scare
+
+      expect(airport).not_to be_clear_to_take_off
+    end
+  end
+end
