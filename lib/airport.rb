@@ -1,6 +1,7 @@
 require_relative 'plane'
 
 class Airport
+
   attr_reader :capacity, :hanger, :weather, :runway
 
   def initialize(no_of_planes, capacity, weather)
@@ -75,4 +76,5 @@ class Airport
   def has_sunny_weather_and_no_bomb_scare?
     sunny_weather? and !has_a_bomb_scare?
   end
+
 end

@@ -1,6 +1,7 @@
 require 'plane'
 
 describe Plane do
+
   let(:airport) { double :Airport }
   let(:plane) { Plane.new(airport) }
 
@@ -9,7 +10,8 @@ describe Plane do
   end
 
   context 'when parked at an airport should' do
-    it 'go to the airport\'s runway before taking off' do
+
+    it "go to the airport's runway before taking off" do
       expect(airport).to receive(:move_to_runway).with(plane)
       plane.go_to_runway
     end
@@ -29,9 +31,11 @@ describe Plane do
 
       expect(plane).to be_parked_at(airport)
     end
+
   end
   
   context 'when flying should' do
+
     let(:plane) { Plane.new(nil) }
 
     it 'land at an airport with clearance' do
@@ -47,6 +51,7 @@ describe Plane do
 
       expect(plane).not_to be_parked_at(airport)
     end
+
   end
 
 end

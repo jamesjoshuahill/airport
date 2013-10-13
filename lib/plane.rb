@@ -1,4 +1,5 @@
 class Plane
+
   def initialize(airport)
     @airport = airport
   end
@@ -19,4 +20,5 @@ class Plane
   def go_to_runway
     @airport.move_to_runway(self)
   end
+
 end

@@ -1,9 +1,11 @@
 require 'weather'
 
 describe Weather do
+
   let(:weather) { Weather.new }
   
   context 'should at random' do
+
     it 'be sunny half the time' do
       expect(Random).to receive(:rand).with(0..1).and_return(0)
 
@@ -15,5 +17,7 @@ describe Weather do
 
       expect(weather.state).to eq :stormy
     end
+
   end
+
 end

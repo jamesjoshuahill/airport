@@ -1,6 +1,7 @@
 require 'application'
 
 describe Application do
+
   let(:app) { Application.new }
 
   it 'should have at least one airport' do
@@ -15,4 +16,5 @@ describe Application do
   it 'should have airport objects' do
     expect(app.airports.first).to be_an Airport
   end
+
 end
