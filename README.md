@@ -4,11 +4,17 @@ Airport
 ### Makers Academy Week 3 - Test
 
 This test was set by Enrique Comba Riepenhausen
-[@ecomba](http://twitter.com/ecomba) whilst learning to code at
-[Makers Academy](http://www.makersacademy.com). The purpose was to build an
+[@ecomba](http://twitter.com/ecomba) and Alex Peattie
+[@alexpeattie](https://twitter.com/alexpeattie) whilst learning to code at
+[Makers Academy](http://www.makersacademy.com). The aim was to build an
 object oriented model of airports and planes in Ruby.
 
-I wrote this code alone using RSpec for TDD. I started by writing CRC cards:
+I wrote this code alone using RSpec for TDD. I started by writing the CRC
+cards (shown below). The primary aim of this test was to write clean, simple,
+readable code.
+
+Afterwards I blogged about
+[writing readable code](http://jamesjoshuahill.tumblr.com/post/60532729861/double-pay-for-clean-simple-readable-code).
 
 #### Class Weather
 
