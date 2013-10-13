@@ -11,10 +11,13 @@ object oriented model of airports and planes in Ruby.
 
 I wrote this code alone using RSpec for TDD. I started by writing the CRC
 cards (shown below). The primary aim of this test was to write clean, simple,
-readable code.
+readable code. I think the closest I came to this aim was in my Airport class:
 
-Afterwards I blogged about
-[writing readable code](http://jamesjoshuahill.tumblr.com/post/60532729861/double-pay-for-clean-simple-readable-code).
+```ruby
+def clear_to_land?
+has_space_in_hanger? and has_sunny_weather_and_no_bomb_scare?
+end
+```
 
 #### Class Weather
 
