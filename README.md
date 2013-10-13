@@ -19,6 +19,12 @@ has_space_in_hanger? and has_sunny_weather_and_no_bomb_scare?
 end
 ```
 
+After the test specification I completed the first stretch goal to give each
+airport a runway and for planes to taxi to the runway before take off.
+
+This model could be improved by making the airport's collection of planes into
+a separate `Hanger` class.
+
 #### Class Weather
 
 | Responsibilities            | Collaborators |
